@@ -2,7 +2,7 @@
 
 OrderDomain
 
-- All apps developed with .NET Core 2.1, gRpc 1.16.0 and Google Protobuf 3.6.1
+- All apps developed with .NET Core 2.1, gRpc 1.16.0 and models created using Google Protobuf 3.6.1
 
 - Consumer and service using linux docker container.
 
