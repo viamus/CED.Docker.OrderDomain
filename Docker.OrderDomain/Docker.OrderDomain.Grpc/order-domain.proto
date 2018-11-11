@@ -7,23 +7,23 @@ service OrderService {
 
 message SendOrderRequest {
     string ref = 1;
-	repeated OrderProduct products = 2;
+    repeated OrderProduct products = 2;
 }
 
 message SendOrderReply {
-	string message = 1;
-	SendOrderStatus status = 2;
+    string message = 1;
+    SendOrderStatus status = 2;
 }
 
 enum SendOrderStatus {
-	CREATED = 0;
+    CREATED = 0;
     UPDATED = 1;
-	BUSINESS_ERROR = 2;
-	INTERNAL_SERVER_ERROR = 3;
+    BUSINESS_ERROR = 2;
+    INTERNAL_SERVER_ERROR = 3;
 }
 
 message OrderProduct {
-	string ref = 1;
+    string ref = 1;
     string productName = 2;
     string value = 3;
 }
