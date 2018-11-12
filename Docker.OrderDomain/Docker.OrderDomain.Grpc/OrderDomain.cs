@@ -32,10 +32,10 @@ namespace Docker.OrderDomain.Grpc {
             "dHVzIj8KDE9yZGVyUHJvZHVjdBILCgNyZWYYASABKAkSEwoLcHJvZHVjdE5h",
             "bWUYAiABKAkSDQoFdmFsdWUYAyABKAkqWgoPU2VuZE9yZGVyU3RhdHVzEgsK",
             "B0NSRUFURUQQABILCgdVUERBVEVEEAESEgoOQlVTSU5FU1NfRVJST1IQAhIZ",
-            "ChVJTlRFUk5BTF9TRVJWRVJfRVJST1IQAzJxCgxPcmRlclNlcnZpY2USYQoJ",
+            "ChVJTlRFUk5BTF9TRVJWRVJfRVJST1IQAzJ1CgxPcmRlclNlcnZpY2USZQoJ",
             "U2VuZE9yZGVyEikuRG9ja2VyLk9yZGVyRG9tYWluLkdycGMuU2VuZE9yZGVy",
             "UmVxdWVzdBonLkRvY2tlci5PcmRlckRvbWFpbi5HcnBjLlNlbmRPcmRlclJl",
-            "cGx5IgBiBnByb3RvMw=="));
+            "cGx5IgAoATABYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Docker.OrderDomain.Grpc.SendOrderStatus), }, new pbr::GeneratedClrTypeInfo[] {

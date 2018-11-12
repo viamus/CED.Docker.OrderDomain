@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Threading;
 using static Docker.OrderDomain.Grpc.OrderService;
 
 namespace Docker.OrderDomain.Grpc
@@ -17,16 +18,37 @@ namespace Docker.OrderDomain.Grpc
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(OrderImplementation));
 
-        public override Task<SendOrderReply> SendOrder(SendOrderRequest request, ServerCallContext context)
+        public override async Task SendOrder(IAsyncStreamReader<SendOrderRequest> requestStream, IServerStreamWriter<SendOrderReply> responseStream, ServerCallContext context)
         {
-            Logger.Info("Received request: " + request);
+            string requestGuid = Guid.NewGuid().ToString();
 
-            OrderComponent component = new OrderComponent();
-            var result = component.SaveOrder(request);
+            Logger.Info($"Started a new grpc stream {requestGuid}");
 
-            Logger.Info("Request response: " + request);
+            try
+            {
+                var component = new OrderComponent();
 
-            return Task.FromResult<SendOrderReply>(result);
+                while(await requestStream.MoveNext(CancellationToken.None))
+                {
+                    var requestMessage = requestStream.Current;
+
+                    Logger.Info($"Stream {requestGuid} received new message {requestMessage}");
+
+                    var response = component.SaveOrder(requestMessage);
+
+                    Logger.Info($"Stream {requestGuid} had a response {response}");
+
+                    await responseStream.WriteAsync(response);
+                }
+            }
+            catch(RpcException ex)
+            {
+                Logger.Error($"Stream {requestGuid} had a processing error {ex.Message}");
+            }
+            finally
+            {
+                Logger.Info($"Stream {requestGuid} has been closed");
+            }
         }
     }
 

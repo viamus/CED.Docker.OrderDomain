@@ -16,7 +16,7 @@ namespace Docker.OrderDomain.Grpc {
     static readonly grpc::Marshaller<global::Docker.OrderDomain.Grpc.SendOrderReply> __Marshaller_Docker_OrderDomain_Grpc_SendOrderReply = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Docker.OrderDomain.Grpc.SendOrderReply.Parser.ParseFrom);
 
     static readonly grpc::Method<global::Docker.OrderDomain.Grpc.SendOrderRequest, global::Docker.OrderDomain.Grpc.SendOrderReply> __Method_SendOrder = new grpc::Method<global::Docker.OrderDomain.Grpc.SendOrderRequest, global::Docker.OrderDomain.Grpc.SendOrderReply>(
-        grpc::MethodType.Unary,
+        grpc::MethodType.DuplexStreaming,
         __ServiceName,
         "SendOrder",
         __Marshaller_Docker_OrderDomain_Grpc_SendOrderRequest,
@@ -31,7 +31,7 @@ namespace Docker.OrderDomain.Grpc {
     /// <summary>Base class for server-side implementations of OrderService</summary>
     public abstract partial class OrderServiceBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Docker.OrderDomain.Grpc.SendOrderReply> SendOrder(global::Docker.OrderDomain.Grpc.SendOrderRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task SendOrder(grpc::IAsyncStreamReader<global::Docker.OrderDomain.Grpc.SendOrderRequest> requestStream, grpc::IServerStreamWriter<global::Docker.OrderDomain.Grpc.SendOrderReply> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -61,21 +61,13 @@ namespace Docker.OrderDomain.Grpc {
       {
       }
 
-      public virtual global::Docker.OrderDomain.Grpc.SendOrderReply SendOrder(global::Docker.OrderDomain.Grpc.SendOrderRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncDuplexStreamingCall<global::Docker.OrderDomain.Grpc.SendOrderRequest, global::Docker.OrderDomain.Grpc.SendOrderReply> SendOrder(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return SendOrder(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return SendOrder(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Docker.OrderDomain.Grpc.SendOrderReply SendOrder(global::Docker.OrderDomain.Grpc.SendOrderRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncDuplexStreamingCall<global::Docker.OrderDomain.Grpc.SendOrderRequest, global::Docker.OrderDomain.Grpc.SendOrderReply> SendOrder(grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_SendOrder, null, options, request);
-      }
-      public virtual grpc::AsyncUnaryCall<global::Docker.OrderDomain.Grpc.SendOrderReply> SendOrderAsync(global::Docker.OrderDomain.Grpc.SendOrderRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return SendOrderAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncUnaryCall<global::Docker.OrderDomain.Grpc.SendOrderReply> SendOrderAsync(global::Docker.OrderDomain.Grpc.SendOrderRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_SendOrder, null, options, request);
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_SendOrder, null, options);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override OrderServiceClient NewInstance(ClientBaseConfiguration configuration)

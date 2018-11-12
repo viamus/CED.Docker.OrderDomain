@@ -2,7 +2,7 @@ syntax = "proto3";
 package Docker.OrderDomain.Grpc;
 
 service OrderService {
-  rpc SendOrder (SendOrderRequest) returns (SendOrderReply) {}
+  rpc SendOrder (stream SendOrderRequest) returns (stream SendOrderReply) {}
 }
 
 message SendOrderRequest {
