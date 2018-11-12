@@ -8,8 +8,7 @@ namespace Docker.OrderDomain.Grpc.Components
     {
         public SendOrderReply SaveOrder(SendOrderRequest request)
         {
-
-            throw new NotImplementedException();
+            return new SendOrderReply { Message = "Funfou", Status = SendOrderStatus.Created };
         }
     }
 }

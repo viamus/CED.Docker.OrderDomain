@@ -67,6 +67,8 @@ namespace Docker.OrderDomain.Consumer
                     Logger.Error($"Grpc request had a error {ex.Message}");
                 }
             }
+
+            await stream.RequestStream.CompleteAsync();
         }
 
         public static async Task ReceiveGrpcResponse(AsyncDuplexStreamingCall<SendOrderRequest, SendOrderReply> stream)
