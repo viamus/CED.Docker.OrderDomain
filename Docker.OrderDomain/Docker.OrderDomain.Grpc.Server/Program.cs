@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Threading;
 using static Docker.OrderDomain.Grpc.OrderService;
+using Docker.OrderDomain.Grpc.Context;
+using Microsoft.EntityFrameworkCore;
+using Docker.OrderDomain.Grpc.Mapper;
 
 namespace Docker.OrderDomain.Grpc
 {
@@ -56,13 +59,15 @@ namespace Docker.OrderDomain.Grpc
     {
         private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(Program));
 
-        const int Port = 50051;
+        public static ServiceProvider Services;
 
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
 
             LoadLog4Net();
+
+            LoadInstanceContext();
 
             var server = LoadGrpcServer();
 
@@ -76,12 +81,12 @@ namespace Docker.OrderDomain.Grpc
             Server server = new Server
             {
                 Services = { BindService(new OrderImplementation()) },
-                Ports = { new ServerPort("localhost", Port, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("localhost", 50051, ServerCredentials.Insecure) }
             };
 
             server.Start();
 
-            Logger.Info("Server listening on port " + Port);
+            Logger.Info("Server listening on port " + 50051);
 
             return server;
         }
@@ -95,6 +100,31 @@ namespace Docker.OrderDomain.Grpc
             var repo = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
 
             XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
+        }
+
+        private static void LoadInstanceContext()
+        {
+            OrderDomainMapper.Instance.LoadMapperConfig();
+
+            var configuration = new ConfigurationBuilder()
+                           .AddEnvironmentVariables()
+                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                           .Build();
+
+            var services = new ServiceCollection();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnectionString");
+
+            if (configuration["DbHost"] != null && configuration["DbUser"] != null && configuration["DbPassword"] != null)
+            {
+                connectionString = string.Format(configuration.GetConnectionString("DockerConnectionString"), configuration["DbHost"], configuration["DbUser"], configuration["DbPassword"]);
+            }
+
+            services.AddDbContext<OrderDomainContext>(
+                   options => options.UseMySql(connectionString));
+
+
+            Services = services.BuildServiceProvider();
         }
     }
 }
