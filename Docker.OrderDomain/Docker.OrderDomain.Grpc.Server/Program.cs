@@ -61,6 +61,8 @@ namespace Docker.OrderDomain.Grpc
 
         public static ServiceProvider Services;
 
+        private static AutoResetEvent waitHandle = new AutoResetEvent(false);
+
         public static void Main(string[] args)
         {
             var configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
@@ -71,7 +73,13 @@ namespace Docker.OrderDomain.Grpc
 
             var server = LoadGrpcServer();
 
-            Console.ReadKey();
+            Console.CancelKeyPress += (o, e) =>
+            {
+                Logger.Info($"Server closing");
+                waitHandle.Set();
+            };
+
+            waitHandle.WaitOne();
 
             server.ShutdownAsync().Wait();
         }
@@ -81,7 +89,7 @@ namespace Docker.OrderDomain.Grpc
             Server server = new Server
             {
                 Services = { BindService(new OrderImplementation()) },
-                Ports = { new ServerPort("localhost", 50051, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("0.0.0.0", 50051, ServerCredentials.Insecure) }
             };
 
             server.Start();

@@ -12,6 +12,7 @@ using System.Linq;
 using Grpc.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Docker.OrderDomain.Consumer
 {
@@ -38,7 +39,18 @@ namespace Docker.OrderDomain.Consumer
 
             Logger.Info($"Connecting to grpc server at {Address}");
 
-            var channel = new Channel(Address, ChannelCredentials.Insecure);
+            var configuration = new ConfigurationBuilder()
+                          .AddEnvironmentVariables()
+                          .Build();
+
+            var networkAddress = Address;
+
+            if (configuration["DockerHost"] != null)
+            {
+                networkAddress = "docker.orderdomain.grpc.server:50051";
+            }
+
+            var channel = new Channel(networkAddress, ChannelCredentials.Insecure);
 
             var orderService = new OrderService.OrderServiceClient(channel);
 
@@ -50,6 +62,8 @@ namespace Docker.OrderDomain.Consumer
 
             Task.WaitAll(requestTask, responseTask);
         }
+
+
 
         public static async Task SendGrpcOrders(ICollection<SendOrderRequest> data, AsyncDuplexStreamingCall<SendOrderRequest, SendOrderReply> stream)
         {

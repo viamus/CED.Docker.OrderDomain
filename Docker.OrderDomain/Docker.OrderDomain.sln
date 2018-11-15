@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.OrderDomain.Grpc", "Docker.OrderDomain.Grpc\Docker.OrderDomain.Grpc.csproj", "{95816AD6-9BB0-4E7F-BC5A-462EE5AC985C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docker.OrderDomain.Grpc", "Docker.OrderDomain.Grpc\Docker.OrderDomain.Grpc.csproj", "{95816AD6-9BB0-4E7F-BC5A-462EE5AC985C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.OrderDomain.Grpc.Server", "Docker.OrderDomain.Grpc.Server\Docker.OrderDomain.Grpc.Server.csproj", "{FB841B33-F683-4DA8-8628-9DDACE3E56B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docker.OrderDomain.Grpc.Server", "Docker.OrderDomain.Grpc.Server\Docker.OrderDomain.Grpc.Server.csproj", "{FB841B33-F683-4DA8-8628-9DDACE3E56B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.OrderDomain.Consumer", "Docker.OrderDomain.Consumer\Docker.OrderDomain.Consumer.csproj", "{15C32BFB-F6D7-4FC0-81FC-D2D39845580E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docker.OrderDomain.Consumer", "Docker.OrderDomain.Consumer\Docker.OrderDomain.Consumer.csproj", "{15C32BFB-F6D7-4FC0-81FC-D2D39845580E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{284D181E-EED5-438B-B43F-38C56DCF00D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{15C32BFB-F6D7-4FC0-81FC-D2D39845580E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15C32BFB-F6D7-4FC0-81FC-D2D39845580E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C32BFB-F6D7-4FC0-81FC-D2D39845580E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284D181E-EED5-438B-B43F-38C56DCF00D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284D181E-EED5-438B-B43F-38C56DCF00D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284D181E-EED5-438B-B43F-38C56DCF00D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284D181E-EED5-438B-B43F-38C56DCF00D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

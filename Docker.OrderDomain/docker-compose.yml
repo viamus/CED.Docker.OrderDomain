@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:  
+  docker.orderdomain.consumer: 
+    image: ${DOCKER_REGISTRY}dockerorderdomaingconsumer
+    build:
+      context: .
+      dockerfile: Docker.OrderDomain.Consumer/Dockerfile
+    depends_on:
+      - docker.orderdomain.grpc.server
+    environment: 
+      - DockerHost=true
+    links:
+      - docker.orderdomain.grpc.server
+
+  docker.orderdomain.grpc.server: 
+    image: ${DOCKER_REGISTRY}dockerorderdomaingrpcserver
+    ports:
+      - "50051:50051"
+    build:
+      context: .
+      dockerfile: Docker.OrderDomain.Grpc.Server/Dockerfile
+    environment: 
+      - DbHost=192.168.99.100
+      - DbUser=root
+      - DbPassword=123@mudar
